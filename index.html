@@ -1,0 +1,80 @@
+<html>
+	<head>
+		<title></title>
+		<meta charset="utf-8" />
+		<style>
+			div{
+				width: 100%;
+				height: 40px;
+				background: #ffaaaa;
+			}
+		</style>
+	</head>
+	<body>
+		<div contenteditable="true" spellcheck="false"></div>
+		<input class="btn" type="button" value='getVal' onclick="getVal()" />
+		<script>
+			
+			var tempObj = {};
+				tempObj.a = 'qwed';
+				tempObj.b = 'qwed';
+				tempObj.c = 'qwed';
+				tempObj.d = {};
+					tempObj.d.a = {};
+						tempObj.d.a.a = 'qweqwe';
+						tempObj.d.a.b = 'qweqwe';
+						tempObj.d.a.c = 'qweqwe';
+						tempObj.d.a.da = 'qweqwe';
+					tempObj.d.b = 'sdfjlj';
+					tempObj.d.c = 'sdfjlj';
+				tempObj.e = 'qwed';
+				tempObj.f = 'qwed';
+				
+			
+			
+			console.log(`${JSON.stringify(tempObj)}`);
+			var clipBoardContent = '{"a":"msga","b":"msgb"}';
+			var $json = document.getElementsByTagName('div')[0];
+//			操作剪切板版
+//			window.clipboardData.setData("Text",clipBoardContent);
+//			try{
+//				copy();
+//				function copy() {
+//					var clip = new ClipboardEvent('copy');
+//				    clip.clipboardData.setData('text/plain', "test");
+//				    clip.preventDefault();
+//				    e.target.dispatchEvent(clip);
+//				}
+//			} catch (ev) {
+//				alert("浏览器不支持诶！")
+//			}
+			
+			
+			
+			function getVal () {
+				try{
+					var myString = $json.innerText;
+					recursionGetValue(JSON.parse(myString))			
+				}catch (ev){
+					console.log('err:'+ev);
+				}
+			}
+			
+			
+			function recursionGetValue (myObject) {
+				try{
+//					console.log(JSON.parse(myObject))
+					for (let obj of Object.keys(myObject)) {
+						if (typeof(myObject[obj]) == 'object') {
+							recursionGetValue(myObject[obj]);
+						} else {
+							console.log(myObject[obj]);
+						}
+					}
+				}catch (ev) {
+					console.log('数据格式出现了问题',ev);
+				}
+			}
+		</script>
+	</body>
+</html>
